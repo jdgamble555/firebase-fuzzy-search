@@ -29,7 +29,7 @@
 				placeholder="Search text..."
 				required
 			/>
-			<button class="rounded-lg border bg-blue-500 p-3 font-semibold text-white" type="submit">
+			<button class="rounded-lg border bg-orange-600 p-3 font-semibold text-white" type="submit">
 				Go!
 			</button>
 		</div>

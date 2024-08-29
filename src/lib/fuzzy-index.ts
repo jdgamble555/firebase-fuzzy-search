@@ -51,6 +51,7 @@ const createIndex = (text: string) => {
 
     // regex matches any alphanumeric from any language and strips spaces
     const finalArray: string[] = [];
+    
     const wordArray = text
         .toLowerCase()
         .replace(/[^\p{L}\p{N}]+/gu, ' ')
@@ -59,7 +60,6 @@ const createIndex = (text: string) => {
         .split(' ');
 
     do {
-
         finalArray.push(
             wordArray.slice(0, NUMBER_OF_WORDS).join(' ')
         );

@@ -16,6 +16,7 @@ export const actions = {
         }
 
         const searchText = text
+            .trim()
             .split(' ')
             .map(v => soundex(v))
             .join(' ');
