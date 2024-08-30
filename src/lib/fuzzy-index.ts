@@ -1,43 +1,31 @@
 const NUMBER_OF_WORDS = 4;
 
 
-export const fuzzyIndex = (
-    text: string,
-    useSoundex = true
-) => {
+export const fuzzyIndex = (text: string) => {
 
     const m: Record<string, number> = {};
 
+    // get array of X words
     let index = createIndex(text);
 
-    if (useSoundex) {
-        const temp = [];
-        for (const i of index) {
-            temp.push(i.split(' ').map(
-                (v: string) => soundex(v)
-            ).join(' '));
-        }
-        index = temp;
-        for (const phrase of index) {
-            if (phrase) {
-                let v = '';
-                const t = phrase.split(' ');
-                while (t.length > 0) {
-                    const r = t.shift();
-                    v += v ? ' ' + r : r;
-                    // increment for relevance
-                    m[v] = m[v] ? m[v] + 1 : 1;
-                }
-            }
-        }
-        return m;
-    }
+    const temp = [];
 
+    // soundex everything
+    for (const i of index) {
+        temp.push(i.split(' ').map(
+            (v: string) => soundex(v)
+        ).join(' '));
+    }
+    index = temp;
+
+    // get each iteration
     for (const phrase of index) {
         if (phrase) {
             let v = '';
-            for (let i = 0; i < phrase.length; i++) {
-                v = phrase.slice(0, i + 1).trim();
+            const t = phrase.split(' ');
+            while (t.length > 0) {
+                const r = t.shift();
+                v += v ? ' ' + r : r;
                 // increment for relevance
                 m[v] = m[v] ? m[v] + 1 : 1;
             }
@@ -51,7 +39,7 @@ const createIndex = (text: string) => {
 
     // regex matches any alphanumeric from any language and strips spaces
     const finalArray: string[] = [];
-    
+
     const wordArray = text
         .toLowerCase()
         .replace(/[^\p{L}\p{N}]+/gu, ' ')
